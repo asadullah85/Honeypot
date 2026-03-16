@@ -47,5 +47,13 @@ Cloud Provider: For this project any cloud provided is good but I used digital o
 
 ![DigitalOcean Droplet Setup](https://raw.githubusercontent.com/asadullah85/Honeypot-/main/Screenshot%202026-03-16%20011101.png)
 
+Pick Region: For the region I picked Toronto as I am closest to it
+
+![Region](https://github.com/asadullah85/Honeypot-/blob/main/Screenshot%202026-03-16%20005551.png?raw=true)
+
+
+
+
+
 
 
