@@ -13,7 +13,7 @@ keeping management ports secured. Automated Discord alerts were set up via webho
 and cron jobs to deliver live attack notifications every minute.
 
 
-## ⚙️ Requirements & Specs
+## ⚙️ Specs
 
 ### Cloud Server (DigitalOcean Droplet)
 | Component | Requirement |
@@ -36,3 +36,15 @@ and cron jobs to deliver live attack notifications every minute.
 | **Discord Webhook** | Real time attack alerts |
 | **Cron** | Automated alert scheduling |
 | **Git** | Cloning T-Pot repository |
+
+
+
+## 🛠️ Installation & Setup
+
+### Step 1 — Create Droplet/ VPS
+
+##Clooud Provider: For this project any cloud provided is good but I used digital ocean
+
+
+
+
