@@ -12,6 +12,31 @@ the globe. A UFW firewall was configured to control exposed attack surfaces whil
 keeping management ports secured. Automated Discord alerts were set up via webhook 
 and cron jobs to deliver live attack notifications every minute.
 
+## Server Architecture
+```mermaid
+flowchart TD
+    A["Internet / Attackers"] --> B["UFW Firewall\nAllow: 22, 23, 80, 443, 64295, 64297\nDefault: Deny All Incoming"]
+    B --> C["T-Pot / Docker"]
+
+    C --> D["Cowrie\nFake SSH/Telnet"]
+    C --> E["Honeytrap\nPort Scanner Trap"]
+    C --> F["Dionaea\nMalware Trap"]
+    C --> G["Sentrypeer\nVoIP/SIP Trap"]
+    C --> H["15+ More Honeypot Services"]
+
+    D --> I["Kibana Dashboard\nAttack map, charts, logs"]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+
+    D --> J["discord_alert.sh\nCron job every minute"]
+    J --> K["Discord\nLive attack alerts"]
+
+    I --> L["Analyst\nViews attack data"]
+    K --> L
+```
+
 
 ## ⚙️ Specs & Security
 
