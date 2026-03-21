@@ -51,24 +51,24 @@ and cron jobs to deliver live attack notifications every minute.
 
 Cloud Provider: For this project any cloud provided is good but I used digital ocean
 
-![DigitalOcean Droplet Setup](https://raw.githubusercontent.com/asadullah85/Honeypot-/main/Screenshot%202026-03-16%20011101.png)
+![DigitalOcean Droplet Setup](https://github.com/asadullah85/Honeypot-/blob/main/Media-Honeypot/Screenshot%202026-03-16%20011101.jpg?raw=true)
 
 Pick Region: For the region I picked Toronto as I am closest to it
 
-![Region](https://github.com/asadullah85/Honeypot-/blob/main/Screenshot%202026-03-16%20005551.png?raw=true)
+![Region]()
 
 
 Choosing an image: For this project I picked Unbuntu 24.4(lts) x 64. Digital ocean provides other images that would work fine for this porject like Debian, but since Unbuntu is drectly supported by Telekom security I chose to go with that.
 
-![Image](https://github.com/asadullah85/Honeypot-/blob/main/Screenshot%202026-03-16%20005631.png?raw=true)
+![Image](https://github.com/asadullah85/Honeypot-/blob/main/Media-Honeypot/Screenshot%202026-03-16%20005631.jpg?raw=true)
 
 Authentication Method: For the authentication method, SSH is a much safer option. In my case I was only going to run this droplet for around 32 hours and SSH is used for servers that run long term. Using password was quicker for the actual setup of the Honey pot and was better for analyzing real-time attack data. Thus, a strong password is very important to implement! 
 
-![Password](https://github.com/asadullah85/Honeypot-/blob/main/Screenshot%202026-03-16%20005736.png?raw=true)
+![Password](https://github.com/asadullah85/Honeypot-/blob/main/Media-Honeypot/Screenshot%202026-03-16%20005736.jpg?raw=true)
 
 Improved Metrics Monitoring: For a server getting 1,800+ attacks an hour with 15+ tpot services running all at once inside Docker, it is very important to be able to see if the droplet is able to handle all of that attack load. This feature tracks network traffic, CPU usage, RAM consumption, and disk I/O.
 
-![Metrics](https://github.com/asadullah85/Honeypot-/blob/main/Screenshot%202026-03-16%20005802.png?raw=true)
+![Metrics](https://github.com/asadullah85/Honeypot-/blob/main/Media-Honeypot/Screenshot%202026-03-16%20005802.jpg?raw=true)
 
 
 
