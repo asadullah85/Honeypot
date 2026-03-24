@@ -202,3 +202,10 @@ run every minute, every hour, every day — essentially running
 continuously in the background forever, or in my case, sending the newest attack every minute. It is worth noting that the first line is actually T-Pot's pre-set cron job that goes off at 1:12 AM; I wrote mine right underneath.
 
 ![Cron](https://github.com/asadullah85/Honeypot/blob/main/Media-Honeypot/Screenshot%202026-03-21%20012030.png?raw=true)
+
+## Discord Alerts
+To set this up, I first created a new Discord server and then created a dedicated channel for honeypot alerts. Inside that channel, I opened Channel Settings, navigated to **Integrations**, and created a new webhook named **messenger**. I then copied the webhook URL from Discord and pasted it into the `WEBHOOK_URL` field inside `discord_alert.sh`. This step must be completed before configuring the cron job; otherwise, the script can run on schedule but the alerts will not be delivered anywhere.
+
+The following screenshots show the setup flow and the final alert outputs in Discord
+
+
