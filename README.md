@@ -214,5 +214,5 @@ The following screenshots show the setup flow and the final alert outputs in Dis
 </p>
 
 <p align="center">
-  <em>Real-time attack alerts on desktop (left) and mobile (right)</em>
+  <em>Real-time attack alerts on desktop (top) and mobile (bottom)</em>
 </p>
