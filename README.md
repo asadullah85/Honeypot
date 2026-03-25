@@ -216,3 +216,29 @@ The following screenshots show the setup flow and the final alert outputs in Dis
 <p align="center">
   <em>Real-time attack alerts on desktop (top) and mobile (bottom)</em>
 </p>
+
+
+---
+
+## Attack Data & Analasys
+
+> **Observation window:** ~32 hours | **Deployment:** DigitalOcean VPS (Toronto region) | **Stack:** T-Pot CE on Ubuntu 22.04
+
+The honeypot was left internet facing for 32 hours with decoy ports. I used Elastic and Kibana dashbooards to moonitor attack data passively. Below is all of the data I have gatehred!
+
+## General Overview of Attacks
+
+| Metric | Value |
+|---|---|
+| **Total Events Captured** | ~55,000+ |
+| **Events in 24-hour window** | 51,768 |
+| **Unique Attacking IPs (Cowrie/SSH)** | 25 |
+| **Most Active Single IP (connections)** | 288 (143.110.165.82) |
+
+
+What surprised me the most about the attacks was how quickly they happened. I observed within minutes of setting up my honeypot, my Elastic dashboard had already picked up an attack. For further context I was getiing 2 attacks every second. The internet has around 4.3 billion ip addresses! Attackers dont manually search them by hand, they use bots. If you deploy a server with open ports like I did, it will be found **immediatly**. Search engines like **Shodan and Censy** use bots that crawl around the internet mapping every single corner 
+using tools like **MASSSCAN or NMAP**. Knowing this, it is important we implement strong passwords (you can see the password requriements under⚙️Specs & Security), Firewalls, rate limiting, reverse proxys and monitoring, just like my honeypot!
+
+
+
+
