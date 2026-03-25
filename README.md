@@ -4,7 +4,7 @@ A live honeypot deployed on a DigitalOcean cloud server to capture and analyze
 real-world attack behavior. Built using T-Pot (Telekom Security) on Ubuntu 24.04, 
 the honeypot ran multiple trap services simultaneously including Cowrie (fake SSH), 
 Honeytrap, Sentrypeer, Dionaea, and more — capturing over 55,000 attacks within 
-24 hours of going live.
+32 hours of going live.
 
 Attack data was visualized in real-time using an Elasticsearch/Kibana dashboard, 
 revealing attacker origins, targeted ports, and credential attempts from across 
@@ -207,5 +207,38 @@ continuously in the background forever, or in my case, sending the newest attack
 To set this up, I first created a new Discord server and then created a dedicated channel for honeypot alerts. Inside that channel, I opened Channel Settings, navigated to **Integrations**, and created a new webhook named **messenger**. I then copied the webhook URL from Discord and pasted it into the `WEBHOOK_URL` field inside `discord_alert.sh`. This step must be completed before configuring the cron job; otherwise, the script can run on schedule but the alerts will not be delivered anywhere.
 
 The following screenshots show the setup flow and the final alert outputs in Discord
+
+<p align="center">
+  <img src="https://github.com/asadullah85/Honeypot/blob/main/Media-Honeypot/Screenshot%202026-03-23%20225422.png?raw=true" height="400" />
+  <img src="https://github.com/asadullah85/Honeypot/blob/main/Media-Honeypot/Screenshot%202026-03-23%20225749.png?raw=true" height="400" />
+</p>
+
+<p align="center">
+  <em>Real-time attack alerts on desktop (top) and mobile (bottom)</em>
+</p>
+
+
+---
+
+## Attack Data & Analasys
+
+> **Observation window:** ~32 hours | **Deployment:** DigitalOcean VPS (Toronto region) | **Stack:** T-Pot CE on Ubuntu 22.04
+
+The honeypot was left internet facing for 32 hours with decoy ports. I used Elastic and Kibana dashbooards to moonitor attack data passively. Below is all of the data I have gatehred!
+
+## General Overview of Attacks
+
+| Metric | Value |
+|---|---|
+| **Total Events Captured** | ~55,000+ |
+| **Events in 24-hour window** | 51,768 |
+| **Unique Attacking IPs (Cowrie/SSH)** | 25 |
+| **Most Active Single IP (connections)** | 288 (143.110.165.82) |
+
+
+What surprised me the most about the attacks was how quickly they happened. I observed within minutes of setting up my honeypot, my Elastic dashboard had already picked up an attack. For further context I was getiing 2 attacks every second. The internet has around 4.3 billion ip addresses! Attackers dont manually search them by hand, they use bots. If you deploy a server with open ports like I did, it will be found **immediatly**. Search engines like **Shodan and Censy** use bots that crawl around the internet mapping every single corner 
+using tools like **MASSSCAN or NMAP**. Knowing this, it is important we implement strong passwords (you can see the password requriements under⚙️Specs & Security), Firewalls, rate limiting, reverse proxys and monitoring, just like my honeypot!
+
+
 
 
