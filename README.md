@@ -242,3 +242,26 @@ using tools like **MASSSCAN or NMAP**. Knowing this, it is important we implemen
 
 ![ATTACKDATA1](https://github.com/asadullah85/Honeypot/blob/main/Media-Honeypot/Screenshot%202026-03-25%20163540.png?raw=true)
 
+### Attacks by honeypot Services
+
+T-Pot runs multiple honeypot services like Cowrie and Honeytrap. These are all fake services but they look appealing to bots scanning the internet!
+
+---
+
+| Honeypot | Events | Purpose |
+|---|---|---|
+| **Honeytrap** | ~23,000 | Generic TCP/UDP listener — catches port scanners |
+| **Sentrypeer** | ~19,000 | SIP/VoIP honeypot |
+| **Cowrie** | ~7,000 | SSH/Telnet brute-force emulator |
+| **Dionaea** | ~3,000 | Malware capture (SMB, HTTP, FTP) |
+| **Tanner** | 993 | Web application attacks |
+| **HOneytrap** | 347 | Low-interaction network listener |
+| **Miniprint** | 164 | Printer protocol emulation |
+| **Dicompot** | 156 | Medical DICOM protocol decoy |
+| **Heralding** | 127 | Credential harvester (FTP, POP3, IMAP, etc.) |
+| **ConPot** | 119 | ICS/SCADA protocol emulation |
+
+---
+
+These services, all 20+ of them listen on different ports and simulate different services as shown in the table above. When doing this project I suspected Cowrie to get the most attacks since it listens to ports that have SSH/telnet and that is where brute forcing can happen the most. The biggest surprise was Sentrypeer getting **19,000** attacks which is insane. Sentrypeer runs SIP: A service that acts like a phone server (VOIP). It starts phone calls, ends them and manages call session over the internet. SIP (Session Initiation Protocol) traffic at that volume indicates active VoIP toll fraud operations — automated dialers scanning for misconfigured PBX systems they can hijack to make fraudulent calls. This is a multi-billion dollar criminal industry that most people don't associate with traditional "hacking."
+
