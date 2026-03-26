@@ -310,7 +310,7 @@ The US leading is expected — it has the largest pool of compromised infrastruc
 
 ---
 
-The images and the attack data showed me something very important. Most people would think that the most common attack would be from **port 22** as bots trying to get unauthorized access to shell is a very dangerous yet common attack. However, Port 5060 was targeted the most which showed me how the internet actually works today. Even if a bot got shell acess to a server, it is not guaranteed that they will be able to escelate their priveledge within it. On port **5060**, if an attacker gets acceess to your SIP server they make premium phone calls, make money from those phone calls but you who owns the server pays the phone bill. Simply put, port 5060 can be more profitable to attackers. 
+The images and the attack data showed me something very important. Most people would think the most common attack would be from **port 22** as bots trying to get unauthorized access to shell is a very dangerous yet common attack. However, Port 5060 was targeted the most which showed me how the internet actually works today. Even if a bot got shell acess to a server, it is not guaranteed that they will be able to escelate their priveledge within it. On port **5060**, if an attacker gets acceess to your SIP server they make premium phone calls, make money from those phone calls but you who owns the server pays the phone bill. Simply put, port 5060 can be more profitable to attackers. 
 
 **Port 8728 (MikroTik Winbox) was a standout.** MikroTik routers are widely deployed in ISPs and enterprises globally, and CVE-2018-14847 (an unauthenticated credential extraction bug) is still being actively exploited years after its disclosure. Attackers recruit compromised MikroTik devices into DDoS botnets and traffic-forwarding infrastructure.
 
@@ -318,5 +318,23 @@ The images and the attack data showed me something very important. Most people w
  
 ---
 
+### Credential Attack Analysis (Cowrie — SSH/Telnet)
+ 
+The most attempted usernames and passwords captured by Cowrie reveal the exact wordlists attackers are running:
+ 
+![ATTACKDATA1](https://github.com/asadullah85/Honeypot/blob/main/Media-Honeypot/Screenshot%202026-03-16%20001131.png?raw=true)
+
+**Top Usernames Attempted:**
+`root` · `admin` · `administrator` · `ubuntu` · `user` · `anonymous` · `ftp` · `postgres` · `hadoop` · `elastic` · `jenkins` · `docker` · `oracle` · `solana`
+ 
+**Top Passwords Attempted:**
+`123456` · `password` · `admin` · `1234` · `123456789` · `(blank)` · `root` · `qwerty` · `123123` · `pass` · `000000` · `qazxswedc`
+
+The passwords and usernames used by the bots in my study are very common, however there is still some information that is worth looking at!
+
+- **Blank passwords being attempted** a significant portion of real-world compromises come from devices shipped with empty default credentials (routers, cameras, embedded systems). Succsesfull attacks are not always sophisticated; more than often it is human error
+- **The rest of the password list is unsurprising** these are the same top-10 passwords from every data breach dump for the last decade. The fact that they're still being tried means they still work somewhere
+- **`solana` as a username**  attackers are explicitly targeting crypto node operators running Solana validators, a very recent and financially motivated addition to credential wordlists. there is a strong pattern of financially motivated attacks in my data
+- **`hadoop`, `elastic`, `postgres`, `jenkins`** these are service account names, meaning attackers aren't just hunting for human users; they're targeting exposed big data and CI/CD infrastructure specifically
 
 
