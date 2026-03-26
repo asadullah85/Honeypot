@@ -337,4 +337,22 @@ The passwords and usernames used by the bots in my study are very common, howeve
 - **`solana` as a username**  attackers are explicitly targeting crypto node operators running Solana validators, a very recent and financially motivated addition to credential wordlists. there is a strong pattern of financially motivated attacks in my data
 - **`hadoop`, `elastic`, `postgres`, `jenkins`** these are service account names, meaning attackers aren't just hunting for human users; they're targeting exposed big data and CI/CD infrastructure specifically
 
+---
+
+CVE & IDS Detections (Suricata)
+
+![ATTACK1](https://github.com/asadullah85/Honeypot/blob/main/Media-Honeypot/Screenshot%202026-03-26%20163425.png?raw=true)
+
+| Alert | Description | Count |
+|---|---|---|
+| SURICATA AF-PACKET truncated packet | Malformed/fragmented packets | 7,328 |
+| SURICATA IPv4 truncated packet | Malformed IPv4 traffic | 7,317 |
+| SURICATA STREAM RST recv but no session | TCP session anomalies | 3,405 |
+| SURICATA STREAM FIN recv but no session | TCP session anomalies | 2,919 |
+| **CVE-2020-11900** | Treck TCP/IP stack RCE (Ripple20) | 1 |
+
+Amongst most of the attack data I discovered they all share one common thing, automation. Most attacks used **automated scripting;** large amounts of scanning, weird behaviour like opening and closing connections and botnets sending unfinished packets. Suricta (my IDS) specifically noted this in both the picture above and the table. **truncated/malformed packets** is consistent with OS fingerprinting tools like `nmap` or `masscan` using crafted packets to identify services and OS versions without completing full TCP handshakes. This is standard pre-exploitation reconnaissance. In simple words random packets sent to see how my system acts.
+
+**CVE-2020-11900 (Ripple20)** was the most significant detection. The bot was likely trying to see if I have a specific vunrebillity to a script.  This is a critical RCE vulnerability in the Treck embedded TCP/IP stack found in millions of IoT and industrial devices (printers, medical equipment, power grids). Catching even one probe for this CVE confirms that threat actors are scanning for vulnerable embedded systems at scale. It only hit once  but once is enough to know someone was looking.
+ 
 
