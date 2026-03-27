@@ -132,7 +132,7 @@ while keeping management ports secured.
 ### Why UFW?
 Without a firewall, every port on the server is completely uncontrolled. 
 UFW allowed full control over exactly what traffic could reach the server 
-— blocking everything by default and only allowing specific ports through.
+blocking everything by default and only allowing specific ports through.
 
 ### Firewall Rules
 
@@ -150,6 +150,8 @@ The default policy was set to **deny all incoming traffic** meaning
 any port not explicitly listed above is completely blocked. This gave 
 full control over the attack surface while still allowing the honeypot 
 traps to function properly.
+
+Note: Docker bypasses UFW by writing directly to iptables. T-Pot's honeypot container ports were reachable regardless of UFW rules, which is expected behaviour and intentional to the T-Pot design.
 
 ### UFW Commands Used
 ![UFW Commands](https://github.com/asadullah85/Honeypot/blob/main/Media-Honeypot/Screenshot%202026-03-20%20223338.jpg?raw=true)
@@ -232,8 +234,8 @@ The honeypot was left internet facing for 32 hours with decoy ports. I used Elas
 | **Most Active Single IP (connections)** | 288 (143.110.165.82) |
 
 
-What surprised me the most about the attacks was how quickly they happened. I observed within minutes of setting up my honeypot, my Elastic dashboard had already picked up an attack. For further context I was getiing 2 attacks every second. The internet has around 4.3 billion ip addresses! Attackers dont manually search them by hand, they use bots. If you deploy a server with open ports like I did, it will be found **immediatly**. Search engines like **Shodan and Censy** use bots that crawl around the internet mapping every single corner 
-using tools like **MASSSCAN or NMAP**. Knowing this, it is important we implement strong passwords (you can see the password requriements under ⚙️Specs & Security), Firewalls, rate limiting, reverse proxys and monitoring, just like my honeypot!
+What surprised me the most about the attacks was how quickly they happened. I observed within minutes of setting up my honeypot, my Elastic dashboard had already picked up an attack. For further context I was getiing 2 attacks every second. The internet has around 4.3 billion ip addresses! Attackers dont manually search them by hand, they use bots. If you deploy a server with open ports like I did, it will be found **immediatly**. Search engines like **Shodan and Censys** use bots that crawl around the internet mapping every single corner 
+using tools like **MASSCAN or NMAP**. Knowing this, it is important we implement strong passwords (you can see the password requriements under ⚙️Specs & Security), Firewalls, rate limiting, reverse proxys and monitoring, just like my honeypot!
 
 
 ![General](https://github.com/asadullah85/Honeypot/blob/main/Media-Honeypot/Screenshot%202026-03-25%20163540.png?raw=true)
@@ -251,13 +253,11 @@ T-Pot runs multiple honeypot services like Cowrie and Honeytrap. These are all f
 | **Cowrie** | ~7,000 | SSH/Telnet brute-force emulator |
 | **Dionaea** | ~3,000 | Malware capture (SMB, HTTP, FTP) |
 | **Tanner** | 993 | Web application attacks |
-| **HOneytrap** | 347 | Low-interaction network listener |
+| **HOneytr4p** | 347 | Low-interaction network listener |
 | **Miniprint** | 164 | Printer protocol emulation |
 | **Dicompot** | 156 | Medical DICOM protocol decoy |
 | **Heralding** | 127 | Credential harvester (FTP, POP3, IMAP, etc.) |
 | **ConPot** | 119 | ICS/SCADA protocol emulation |
-
----
 
 These services, all 20+ of them listen on different ports and simulate different services as shown in the table above. When doing this project I suspected Cowrie to get the most attacks since it listens to ports that have SSH/telnet and that is where brute forcing can happen the most. The biggest surprise was Sentrypeer getting **19,000** attacks which is insane. Sentrypeer runs SIP: A service that acts like a phone server (VOIP). It starts phone calls, ends them and manages call session over the internet. SIP (Session Initiation Protocol) traffic at that volume indicates active VoIP toll fraud operations — automated dialers scanning for misconfigured PBX systems they can hijack to make fraudulent calls. This is a multi-billion dollar criminal industry that most people don't associate with traditional "hacking."
 
@@ -306,13 +306,13 @@ The US leading is expected — it has the largest pool of compromised infrastruc
 
 ---
 
-The images and the attack data showed me something very important. Most people would think the most common attack would be from **port 22** as bots trying to get unauthorized access to shell is a very dangerous yet common attack. However, Port 5060 was targeted the most which showed me how the internet actually works today. Even if a bot got shell acess to a server, it is not guaranteed that they will be able to escelate their privilege within it. On port **5060**, if an attacker gets acceess to your SIP server they make premium phone calls, make money from those phone calls but you who owns the server pays the phone bill. Simply put, port 5060 can be more profitable to attackers. 
+The images and the attack data showed me something very important. Most people would think the most common attack would be from **port 22** as bots trying to get unauthorized access to shell is a very dangerous yet common attack. However, Port 5060 was targeted the most which showed me how the internet actually works today. Even if a bot got shell acess to a server, it is not guaranteed that they will be able to escelate their privilege within. On port **5060**, if an attacker gets acceess to your SIP server they make premium phone calls, make money from those phone calls but you who owns the server pays the phone bill. Simply put, port 5060 can be more profitable to attackers. 
 
 **Port 8728 (MikroTik Winbox) was a standout.** MikroTik routers are widely deployed in ISPs and enterprises globally, and CVE-2018-14847 (an unauthenticated credential extraction bug) is still being actively exploited years after its disclosure. Attackers recruit compromised MikroTik devices into DDoS botnets and traffic-forwarding infrastructure.
 
-**Port 6379 (Redis)** being probed is a textbook move — an exposed Redis instance with no authentication allows arbitrary command execution. It's one of the most common initial access vectors for cryptomining malware (specifically XMRig). Finding this in the wild data confirms what threat intel reports consistently show.
+**Port 6379 (Redis)** being probed is a textbook move, an exposed Redis instance with no authentication allows arbitrary command execution. It's one of the most common initial access vectors for cryptomining malware (specifically XMRig). Finding this in the wild data confirms what threat intel reports consistently show.
  
----
+--- 
 
 ### Credential Attack Analysis (Cowrie — SSH/Telnet)
  
@@ -353,13 +353,13 @@ Amongst most of the attack data I discovered they all share one common thing, au
 
 ---
 
-### 🧠 What I learned + key takeaways
+### What I learned + key takeaways
 
 This was my first cybersecurtiy project. Before I could even write this Github README I had to learn how a honeypot works, evaluate different cloud providers, understand docker containers and learn how to write simple bash scripts and how to automate them. But once everything worked I was given real-time attack data that taught me more than any course, book or video.
 
 Here are my technical takeaways:
 
-- **You will be attacked immediately.** No grace period. Within minutes 
+- **You will be attacked immediately.**. Within seconds
   of going live I already had hits on my Kibana dashboard. I had around 
   2 attacks per second across all sensors. The internet is not a 
   passive place.
@@ -380,7 +380,7 @@ Here are my technical takeaways:
   perspective thinking like an attacker to defend better is 
   something I will carry into every project going forward.
 
-One final note. Whilst I did take away a lot of practical knowledge from this project. The biggest takeaway was a personal one; **patience is the most valuable thing in any tech project**. Sometimes things did not go my way. For example trying to automate the bash script in my case. Trying to find docker files, learning new commands, how docker containers work, how cron jobs work that all took me a lot of time. Eventually however, it was all worth it. Things may feel diffucult in the moment but that friction is what makes you grow and learn!
+One final note. Whilst I did take away a lot of practical knowledge from this project. The biggest takeaway was a personal one; **patience is the most valuable thing in any tech project**. Sometimes things did not go my way. For example trying to automate the bash script in my case. Trying to find docker files, learning new commands, how docker containers work, how cron jobs work that all took me a lot of time. Eventually however, it was all worth it. Things may feel difficult in the moment but that friction is what makes you grow and learn!
 
 Excited to make more projects in the future!
 
